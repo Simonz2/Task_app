@@ -1,0 +1,19 @@
+.env
+node_modules
+#compiled objects files, static and dynabimic libraries(shared objects)
+*.o
+*.a
+*.so
+#folders
+_obj
+_test
+vendor/
+#compiled binary files
+*.exe
+*.out
+
+#go specific files
+#compile binary files for packages and commands
+/bin/
+#output of the go coverage tool, specifically when used with LiteIDE
+*.out
