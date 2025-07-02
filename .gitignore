@@ -4,10 +4,15 @@ node_modules
 *.o
 *.a
 *.so
+*.log
+
 #folders
 _obj
 _test
 vendor/
+#the temp folder
+tmp/
+
 #compiled binary files
 *.exe
 *.out
