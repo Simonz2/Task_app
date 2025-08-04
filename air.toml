@@ -13,6 +13,6 @@ tmp_dir = "tmp"
     #monitoring for changes
     include = ["**/*.go"]
     #specifies the file patterns to be included for monitoring
-    ignore = ["tmp/*"]
+    ignore = ["tmp/*","client/*"]
     #specifies the files or directories to be ignores when
     #triggering a build
