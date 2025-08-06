@@ -9,7 +9,7 @@ node_modules
 #folders
 _obj
 _test
-vendor/
+#vendor/
 #the temp folder
 tmp/
 

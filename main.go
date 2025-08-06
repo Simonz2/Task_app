@@ -18,6 +18,9 @@ func main() {
 		AllowOrigins: "http://localhost:5173",
 		AllowHeaders: "Origin, Content-Type, Accept",
 	}))
+	if os.Getenv("ENV") == "production" {
+		app.Static("/", "./client/dist")
+	}
 
 	err := godotenv.Load(".env")
 	if err != nil {
