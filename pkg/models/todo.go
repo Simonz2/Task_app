@@ -1,6 +1,8 @@
 package models
 
 import (
+	"log"
+
 	"github.com/Simonz2/Task_app/pkg/config"
 	"gorm.io/gorm"
 )
@@ -46,8 +48,9 @@ func DeleteTodo(id int64) Todo {
 
 func PatchTodo(id int64) *Todo {
 	var todo Todo
-	// Primero buscamos el todo por ID
-	if err := db.Where("id = ?", id).First(&todo).Error; err != nil {
+	// find todo by id
+	log.Println("patching todo with id:", id)
+	if err := db.Where("ID = ?", id).First(&todo).Error; err != nil {
 		return nil // Not found or error
 	}
 	// update todo.Completed to true

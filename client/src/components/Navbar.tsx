@@ -9,12 +9,13 @@ import {
 import {
     useColorModeValue,
     useColorMode,
-} from "@/components/ui/color-mode"
+} from "@chakra-ui/react"
 
 import {LuMoon, LuSun} from "react-icons/lu";
 
 
 export default function Navbar() {
+
     const {colorMode, toggleColorMode}=useColorMode();
     return (
         <Container maxW={"900px"}>
@@ -38,6 +39,7 @@ export default function Navbar() {
                         </Text>
                         {/*TOGGLE COLOR MODE*/}
                         <IconButton
+                        aria-label="ColorMode"
                             onClick={toggleColorMode} variant="outline" size="sm">
                                 {colorMode  === "light" ? <LuSun/> : <LuMoon/>}
                             </IconButton>

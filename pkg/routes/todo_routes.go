@@ -12,11 +12,12 @@ var todos = []models.Todo{}
 
 // RegisterTodoRoutes sets up all todo-related routes
 func RegisterTodoRoutes(app *fiber.App) {
+	//get all todos not deleted
 	app.Get("/api/todos", func(c *fiber.Ctx) error {
 		todos = models.GetTodos()
 		return c.Status(200).JSON(todos)
 	})
-
+	//create a new todo
 	app.Post("/api/todos", func(c *fiber.Ctx) error {
 		todo := &models.Todo{}
 		if err := c.BodyParser(todo); err != nil {
@@ -28,7 +29,7 @@ func RegisterTodoRoutes(app *fiber.App) {
 		todo.CreateTodo()
 		return c.Status(201).JSON(todo)
 	})
-
+	//update a todo by id(todo.completed=true)
 	app.Patch("/api/todos/:id", func(c *fiber.Ctx) error {
 		id := c.Params("id")
 		todo := &models.Todo{}
@@ -39,7 +40,7 @@ func RegisterTodoRoutes(app *fiber.App) {
 		}
 		return c.Status(404).JSON(fiber.Map{"error": "todo not found"})
 	})
-
+	//delete a todo by id
 	app.Delete("/api/todos/:id", func(c *fiber.Ctx) error {
 		id := c.Params("id")
 		ids, _ := strconv.ParseInt(id, 10, 64)
