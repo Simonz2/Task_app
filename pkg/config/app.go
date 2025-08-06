@@ -14,12 +14,16 @@ var (
 )
 
 func Connect() {
-	err := godotenv.Load(".env")
-	if err != nil {
-		log.Fatal("Error loading .env file")
+	if os.Getenv("ENV") != "production" {
+		err := godotenv.Load(".env")
+		if err != nil {
+			log.Println("Warning: .env file not found, continuing with system env vars")
+		}
 	}
 	dsn := os.Getenv("DSN")
-
+	if dsn == "" {
+		log.Fatal("Missing DSN environment variable")
+	}
 	d, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
 		panic(err)
