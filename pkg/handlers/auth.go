@@ -7,12 +7,14 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
+type request struct {
+	Username string `json:"username"`
+	Password string `json:"password"`
+}
+
 func LoginHandler(c *fiber.Ctx) error {
 	//handle userlogin
-	var req struct {
-		Username string `json:"username"`
-		Password string `json:"password"`
-	}
+	var req request
 	if err := c.BodyParser(&req); err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "invalid request"})
 	}
@@ -42,6 +44,24 @@ func LoginHandler(c *fiber.Ctx) error {
 	return c.Status(fiber.StatusOK).JSON(fiber.Map{"token": token, "message": "login successful"})
 }
 
+//password with min: 8 chars, at least one uppercase, one digit, one special char
+
 func RegisterHandler(c *fiber.Ctx) error {
-	return nil
+	var req request
+
+	//check if the request body is valid
+	if err := c.BodyParser(&req); err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "invalid request payload"})
+	}
+	//basic field validation
+	if req.Username == "" || req.Password == "" {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "username or password is empty"})
+	}
+	//
+	userRepo := repo.NewUserRepo(config.GetDB())
+	err := userRepo.CreateUser(req.Username, req.Password)
+	if err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": err.Error()})
+	}
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{"message": "user created successfully"})
 }
