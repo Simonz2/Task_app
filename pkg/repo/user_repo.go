@@ -33,7 +33,7 @@ func (r *UserRepo) GetUserByUsername(username string) (*models.User, error) {
 func (r *UserRepo) CreateUser(username, password string) error {
 	//check if user already exists
 	_, err := r.GetUserByUsername(username)
-	if err == nil {
+	if err != nil {
 		return errors.New("user already exists")
 	}
 	//validate password

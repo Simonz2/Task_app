@@ -19,6 +19,7 @@ func init() {
 	config.Connect()
 	db = config.GetDB()
 	db.AutoMigrate(&Todo{})
+	db.AutoMigrate(&User{})
 }
 func (t *Todo) CreateTodo() *Todo {
 	db.Create(&t)
